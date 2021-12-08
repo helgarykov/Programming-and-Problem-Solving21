@@ -11,6 +11,18 @@ let readFile (filename: string) : option<string> =
 
 
 
+/// Discriminated union
+/// Wrapper type
+/// Sum type
+(*type Option<'s> =
+    | Some value of 's
+    | None
+
+    member Value =
+        let (Some v) = this
+        v *)
+
+
 
 ///<summary> Given a list of file names, concotenates the files. If one of the files doesn't exist, returns None.</summary>
 ///<param name="filenames">A list of strings.</param>
@@ -18,8 +30,18 @@ let readFile (filename: string) : option<string> =
 let rec cat (filenames: list<string>) : option<string> =
     match filenames with
         | [] -> None     
-        | head :: [] -> Some (readFile head).Value   
-        | head :: tail -> Some ((readFile head).Value + (cat tail).Value) 
+        | filename :: [] -> 
+            match (readFile filename) with
+            | Some content -> Some content
+            | None -> None
+        | filename :: restOfList -> 
+            match (readFile filename) with
+            | Some content -> 
+                match (cat restOfList) with
+                | Some innercontent -> Some (content + innercontent)
+                | None -> None
+            | None -> None
+
     
     
 ///<summary> Given a list of file names, reverses the order of each file in a line-by-line manner, reverses each line (opposite of cat) and concatenates the result. If one of the files doesn't exist, returns None.</summary>
@@ -28,7 +50,7 @@ let rec cat (filenames: list<string>) : option<string> =
 let rec tac (filenames: list<string>) : option<string> =
 
     let rec reverseText (file: string) : string =
-        match file.Length with                       // 
+        match file.Length with                       
             | 0 -> ""
             | 1 -> file 
             | _ -> (reverseText file.[1..file.Length]) + (string file.[0])
