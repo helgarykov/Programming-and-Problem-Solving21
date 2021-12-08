@@ -11,6 +11,18 @@ let readFile (filename: string) : option<string> =
         | :? System.IO.DirectoryNotFoundException -> None
 
 
+/// Discriminated union
+/// Wrapper type
+/// Sum type
+(*type Option<'s> =
+    | Some value of 's
+    | None
+
+    member Value =
+        let (Some v) = this
+        v *)
+
+
 
 ///<summary> Given a list of file names, concotenates the files. If one of the files doesn't exist, returns None.</summary>
 ///<param name="filenames">A list of strings.</param>

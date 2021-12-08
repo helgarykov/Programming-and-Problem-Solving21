@@ -11,7 +11,6 @@
 *.dvi
 *.log
 *.out
-*.pdf
 
 \#build*
 .\#build*
