@@ -23,7 +23,7 @@ let readFile (filename: string) : option<string> =
         v *)
 
 
-/// THIS IS A VERY CLEVER FIX
+/// THIS IS A VERY CLEVER FIX! IT TRULY IS!
 
 
 ///<summary> Given a list of file names, concotenates the files. If one of the files doesn't exist, returns None.</summary>
