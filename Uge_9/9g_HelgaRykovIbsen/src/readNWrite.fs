@@ -8,7 +8,7 @@ let readFile (filename: string) : option<string> =
         Some (System.IO.File.ReadAllText filename) 
     with 
         | :? System.IO.FileNotFoundException -> None
-
+        | :? System.IO.DirectoryNotFoundException -> None
 
 
 
@@ -18,22 +18,35 @@ let readFile (filename: string) : option<string> =
 let rec cat (filenames: list<string>) : option<string> =
     match filenames with
         | [] -> None     
-        | head :: [] -> Some (readFile head).Value   
-        | head :: tail -> Some ((readFile head).Value + (cat tail).Value) 
-    
+        | filename :: [] -> 
+            match (readFile filename) with
+            | Some content -> Some content
+            | None -> None
+        | filename :: restOfList -> 
+            match (readFile filename) with
+            | Some content -> 
+                match (cat restOfList) with
+                | Some innercontent -> Some (content + innercontent)
+                | None -> None
+            | None -> None
+
+
+let charListToString (input: char list): string =
+    System.String.Concat(Array.ofList(input))
     
 ///<summary> Given a list of file names, reverses the order of each file in a line-by-line manner, reverses each line (opposite of cat) and concatenates the result. If one of the files doesn't exist, returns None.</summary>
 ///<param name="filenames">A list of strings.</param>
 ///<returns> A string option.</returns>  
 let rec tac (filenames: list<string>) : option<string> =
 
-    let rec reverseText (file: string) : string =
-        match file.Length with                       // 
-            | 0 -> ""
-            | 1 -> file 
-            | _ -> (reverseText file.[1..file.Length]) + (string file.[0])
+    let rec reverseText (input: char list) (acc: char list) : char list =
+        let reversed = match input with
+            | [] -> acc
+            | head :: tail -> reverseText tail (head :: acc)
 
-    match filenames with
-        | [] -> None
-        | head :: [] -> Some (reverseText (readFile head).Value)
-        | head :: tail -> Some ((reverseText (readFile head).Value) + (tac tail).Value)
+    let normalResult = cat filenames // option string
+
+    let reversedResult = 
+        match normalResult with
+        | Some text -> charListToString (reverseText (Seq.ToList text) [])
+        | None -> None
