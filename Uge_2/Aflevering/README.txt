@@ -1,0 +1,1 @@
+In order to convert the code written in Latex to a pdf-format, I have to type the command "pdflatex <name of file>" in the console line and run the command. After that the program creates a the pdf-file  that can be accessed from the same folder as the one containing the original Latex-code. 

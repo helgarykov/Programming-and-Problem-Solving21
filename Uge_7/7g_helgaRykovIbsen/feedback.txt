@@ -1,0 +1,66 @@
+# 7g - generelle kommentarer og overholdelse af afleveringsformat
+
+Smid nu afleveringen gennem onlineTA før i afleverer. I har stavet jeres rotate modul forkert.
+
+# 7g0
+
+[+] Jeres signaturfil indeholder de korrekte funktioner
+[+] Jeres signaturfil følger dokumentationsstandarden
+[-] Jeres Board-type er ikke korrekt. Den skal være `char list`
+[-] Jeres Position-type er ikke korrekt. Den skal være `int`
+    Det er en rimelig subtil fejl her. Det er forskellen på "type Board = char list" og "type Board = Board of char list". Den første er den korrekte i denne sammenhæng.
+    Det du har gjort bruges normalt til sumtyper som fx Option typen, eller result typen fra øvelsesopgaverne. Den syntaks bruges altså normalt hvis en type kan antage flere forskellige former. Flere steder i din opgave er du nødt til at trække char listen ud af Board typen, hvilket i virkeligheden ikke er så smart.
+[-] Jeres module hedder ikke `rotate` som beskrevet i opgaveteksten, første sætning i punkt 7g0.
+
+# 7g1 - blackbox test
+
+[+] I tester alle funktioner i API'et.
+[+] Jeres test er overskueligt opstillede.
+
+# 7g2 - create
+
+[+] Jeres create fungerer som specificeret.
+Måden du bruger match på her er ikke specielt smart. Læg mærke til at du smider værdien der bliver matchet på væk i alle tilfældene, og så bare bruger guards. Det svarer jo i virkeligheden bare til et if-statement. Alternativt kunne du matche på tuplen (n<2u, n>5u), med cases ala |(False, False) -> ...
+
+# 7g2 - board2Str
+
+[+] Jeres board2Str fungerer som specificeret.
+
+# 7g2 - validRotation
+
+[+] Jeres validRotation fungerer som specificeret.
+
+# 7g2 - rotate
+
+[+] Jeres rotate fungerer som specificeret.
+
+# 7g2 - scramble
+
+[+] Jeres scramble fungerer som specificeret.
+
+# 7g2 - solved
+
+[+] Jeres solved fungerer som specificeret.
+
+# 7g3 - whitebox test
+
+[+] I tester alle funktioner i API'et.
+[+] Jeres test er overskueligt opstillede.
+
+# 7g4 - game
+
+[+] Jeres game fungerer som specificeret.
+Det ville dog være fedt hvis der også lige var noget der gjorde at man kunne se at man skal vælge en størrelse på boardet (og hvor stort det må være)
+Det sker ret ofte at det board der bliver genereret allerede er solved. Det sker (tror jeg) fordi 4 går lige op i 100.
+
+# 7g, Rapport
+
+[+] Rapporten indeholder de forventede afsnit eller tilsvarende
+    (Introduktion, Problemanalyse og design, programbeskrivelse/implementation, afprøvning/test, konklusion)
+[+] Rapporten er læsbar, uden for mange stavefejl og andet "sjusk"
+[+] Rapporten beskriver hvordan blackbox testene er udarbejdet
+[+] Rapporten beskriver hvordan whitebox testene er udarbejdet
+[+] Rapporten indeholder en besvarelse af 7g5
+[+] Rapporten beskriver hvilke dele af API'et der er implementeret
+[+] Rapporten beskriver hvordan `game.fsx` er struktureret
+[+] Rapporten er mellem 5 og 10 sider.

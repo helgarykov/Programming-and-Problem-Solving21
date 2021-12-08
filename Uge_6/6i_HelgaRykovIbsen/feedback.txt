@@ -1,0 +1,27 @@
+# 6i - generelle kommentarer og overholdelse af afleveringsformat
+
+Super fint, men tag lige et ekstra kig på dokumentationsstandarden.
+
+# 6i0
+
+[+] Din signatur for funktionen cfrac2float er korrekt.
+[-] Du bruger dokumentationsstarden forkert. Husk at det eneste der skal dokumenteres er parametre til funktionen. Altså er det udelukkende inputs til funktionen der skal dokumenteres, ikke indvendige variable.
+
+# 6i1
+
+[+] Din signatur for funktionen float2cfrac er korrekt.
+[-] Du bruger dokumentationsstarden forkert. Husk at det eneste der skal dokumenteres er parametre til funktionen. Altså er det udelukkende inputs til funktionen der skal dokumenteres, ikke indvendige variable.
+
+# 6i2 - continued fractions bibliotek
+
+[+] Dit bibliotek (continuedFraction) kan oversættes (compiles) præcis som forventet.
+
+# 6i2, Test af biblioteket, cfrac2float
+
+[+] Fin opstilling af dine test.
+[+] Dine testcases er gode.
+
+# 6i2, Test af biblioteket, float2cfrac
+
+[+] Fin opstilling af dine test.
+[+] Dine testcases er gode.

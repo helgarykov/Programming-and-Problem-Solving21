@@ -1,0 +1,65 @@
+# 5g - generelle kommentarer og overholdelse af afleveringsformat
+
+Husk at checke at dine funktioner hedder det der står i opgaven de skal hedde.
+Hvis du er i tvivl, så prøv at køre din kode gennem onlineTA. Den fortæller dig hvis du har gjort det forkert.
+
+# 5g0a - isTable
+
+[+] Jeres funktion er korrekt.
+[+] Jeres dokumentation af isTable følger dokumentationsstandarden.
+
+# 5g0b - firstColumn
+
+[+] Jeres funktion er korrekt.
+[+] Jeres dokumentation af firstColumn følger dokumentationsstandarden.
+
+# 5g0c - dropFirstColumn
+
+[+] Jeres funktion er korrekt.
+[+] Jeres dokumentation af dropFirstColumn følger dokumentationsstandarden.
+
+# 5g0c - transposeLstLst
+
+[+] Jeres funktion er korrekt.
+[+] Jeres dokumentation af transposeLstLst følger dokumentationsstandarden.
+
+# 5g0e - isTable test
+
+[+] Fin opstilling af jeres test.
+[+] Jeres testcases er gode.
+[+] Godt I har både positive og negative test (hvor det forventede resultat er hhv. true og false)
+
+# 5g0e - firstColumn test
+
+[+] Fin opstilling af jeres test.
+[+] Jeres testcases er gode.
+[+] Godt I har både positive og negative test (hvor det forventede resultat er hhv. true og false)
+
+# 5g0e - dropFirstColumn test
+
+[+] Fin opstilling af jeres test.
+[+] Jeres testcases er gode.
+[+] Godt I har både positive og negative test (hvor det forventede resultat er hhv. true og false)
+
+# 5g0e - transposeLstLst test
+
+[+] Fin opstilling af jeres test.
+[+] Jeres testcases er gode.
+
+# 5g1a - transposeArr
+
+[+] Jeres funktion er korrekt.
+[+] Jeres dokumentation af transposeArr følger dokumentationsstandarden.
+
+# 5g1b - transposeArr test
+
+[+] Fin opstilling af jeres test.
+[+] Jeres testcases er gode.
+
+# 5g1c - diskussion af fordele og ulemper
+
+[+] Gode pointer.
+
+# 5g1d - diskussion af fordele og ulemper ved funktionel vs. imperativ
+
+[+] Gode pointer.

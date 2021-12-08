@@ -1,0 +1,37 @@
+# 8i - generelle kommentarer og overholdelse af afleveringsformat
+
+Super fint.
+
+# 8i0
+
+[+] Din figur figTest er korrekt
+
+# 8i1 - makePicture
+
+[+] Din makePicture genererer et .png-billede som forventet.
+[+] Din makePicture bruger ImgUtil.setPixel som forventet.
+[+] Din makePicture benytter colorAt som forventet.
+
+# 8i2
+
+[+] Din aflevering indeholder kode der konstruerer en billedfil `figTest.png`
+
+# 8i3 - checkFigure
+
+[+] Din checkFigure kan håndtere Circle figurer
+[+] Din checkFigure kan håndtere Rectangle-figurer
+[+] Din checkFigure kan håndtere arbitrære Mix-figurer
+[-] I stedet for at have en guard, for så at returnere en boolean direkte, kan du konstruere din boolean så det er resultatet. Din første case fx kunne være\:
+    "Circle (_,r,_) -> r >= 0" eller "Circle (_,r,_) -> not r < 0"
+
+# 8i4 - move
+
+[+] Din move kan håndtere Circle figurer
+[+] Din move kan håndtere Rectangle-figurer
+[+] Din move kan håndtere arbitrære Mix-figurer
+
+# 8i5 - boundingBox
+
+[+] Din boundingBox kan håndtere Circle figurer
+[+] Din boundingBox kan håndtere Rectangle-figurer
+[+] Din boundingBox kan håndtere arbitrære Mix-figurer

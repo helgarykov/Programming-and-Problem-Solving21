@@ -1,0 +1,2 @@
+fsharpc -a vec2dsmall.fsi vec2dsmall.fs
+fsharpc -r vec2dsmall.dll 4i1.fsx

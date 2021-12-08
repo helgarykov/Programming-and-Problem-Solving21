@@ -1,0 +1,17 @@
+*.exe
+*.dll
+*.zip
+*.gz
+
+.ionide
+.vscode
+.DS_Store
+
+*.aux
+*.dvi
+*.log
+*.out
+*.pdf
+
+\#build*
+.\#build*
