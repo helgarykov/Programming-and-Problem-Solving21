@@ -23,6 +23,8 @@ let readFile (filename: string) : option<string> =
         v *)
 
 
+/// THIS IS A VERY CLEVER FIX
+
 
 ///<summary> Given a list of file names, concotenates the files. If one of the files doesn't exist, returns None.</summary>
 ///<param name="filenames">A list of strings.</param>
@@ -40,9 +42,7 @@ let rec cat (filenames: list<string>) : option<string> =
                 match (cat restOfList) with
                 | Some innercontent -> Some (content + innercontent)
                 | None -> None
-            | None -> None
-
-    
+            | None -> None    
     
 ///<summary> Given a list of file names, reverses the order of each file in a line-by-line manner, reverses each line (opposite of cat) and concatenates the result. If one of the files doesn't exist, returns None.</summary>
 ///<param name="filenames">A list of strings.</param>
