@@ -52,13 +52,12 @@ let charListToString (input: char list): string =
 let rec tac (filenames: list<string>) : option<string> =
 
     let rec reverseText (input: char list) (acc: char list) : char list =
-        let reversed = match input with
+        match input with
             | [] -> acc
             | head :: tail -> reverseText tail (head :: acc)
 
     let normalResult = cat filenames // option string
 
-    let reversedResult = 
-        match normalResult with
-        | Some text -> charListToString (reverseText (Seq.ToList text) [])
+    match normalResult with
+        | Some text -> Some (charListToString (reverseText (Seq.toList text) []))
         | None -> None
