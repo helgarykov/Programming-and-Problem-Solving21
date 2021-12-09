@@ -40,4 +40,4 @@ On non-existing files as arguments, <mono cat.exe cat.fsx> throwed an exception.
  enil dnammoc eht morf noitcnuf eht otni stnemugra tup ot swolla // ]>tnioPyrtnE<[%   
 
 
- 3. I ran <countLinks.fsx> on the http://fsharp.org and got the output 82 links.
+ 3. I ran <countLinks.fsx> on the http://fsharp.org and got the output 82 links. Given an invalid link as input, the function returns None.

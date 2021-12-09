@@ -21,10 +21,14 @@ let readUrl (url:string) : string option  =
 ///<returns>Returns number of links the website contains.</returns>
 let countLinks (url: string) : int =
     match readUrl url with 
-        | Some link ->
-            let regex = Text.RegularExpressions.Regex "(?s)<a [^>]*?>(?<text>.*?)</a>"   
-            regex.Matches(link).Count
-        | None -> -1
+    | Some link ->
+        let regex = Text.RegularExpressions.Regex "(?s)<a [^>]*?>(?<text>.*?)</a>"
+        regex.Matches(link).Count
+    | None -> -1
 
 
+let url = "http://fshar.org "
+
+
+printfn "%A" (countLinks url)
 
