@@ -1,3 +1,3 @@
 open SimulateDrones
 
-printfn "%A: Black-box test for Simulate" 
+printfn "Black-box test for SimulateDrones %A" 
