@@ -8,51 +8,57 @@ module SimulateDrones
 ///<param name=""> .</param>
 ///<returns> Reached destination or not as a bool.</returns> 
 
-type Drone (x:int, y:int, x1:int, y1:int, s:int) =
-    //let mutable x = x
-    //let mutable x1 = x1
-    //let mutable y = y
-    //let mutable y1 = y1
-    let mutable position = (x, y)
-    let mutable destination = (x1, y1)
-    let mutable speed = s 
 
-     member this.destination =
-        if destination = position then
+let divideVector (x: float, y: float) (e: float) : float * float =
+    let xA = x / e
+    let yA = y / e
+    (xA, yA)
+       
+        
+let multiplyVector (s: float) (x: float, y: float) : float * float =
+    let xB = s * x
+    let yB = s * y
+    (xB, yB)
+
+
+
+type Drone (x:int, y:int, x1:int, y1:int, s:int) =
+    let mutable position = (x, y)
+    let mutable aDestination = (x1, y1)
+    let mutable speed = float (s) 
+
+    member this.fly = 
+        let directionVector = ((float (x1 - x)), (float (y1 - y)))                     //finds the vector <Position-Destination>
+        let lengthVector = float (sqrt ((float (x1 - x) ** 2.0) + (float (y1 - y) ** 2.0)))  //finds the length of the vector <Position-Destination> 
+        let unitVector = divideVector directionVector lengthVector // finds the unit vector
+        let newPosition = multiplyVector speed unitVector 
+        newPosition  // find the new position of a drone after one second flight                                 
+        
+    
+    member this.destination =
+        if aDestination = position then
             position
         else
-            destination
+            aDestination
 
     member this.atDestination =    
         if position = this.destination then 
             true 
         else 
             false
-
-
-    member this.fly = 
-        let direction = ((x1 - x), (y1 - y))
-        let directionNorm = ((s * (x1 - x)), (s * (y1 - y)))
-        let newPosition = position + directionNorm 
         
 
+(* let a = Drone (10, 10, 50, 50, 5)
+let b = Drone (350, 100, 350, 300, 2)
+let c = Drone (100, 350, 300, 330, 10)
+let d = Drone (200, 250, 390, 390, 6)
+let e = Drone (90, 300, 150, 10, 2) *)
 
 
-        //let directionNorm = ((s * (x1 - x)), (s * (y1 - y))) 
-        let distance = sqrt (((x1 - x) ** 2) + ((y1 - y) ** 2))
-        let distanceNorm = s * distance
-        let newPosition = position + distanceNorm 
-        newPosition
 
-
-        
-   
-
-let drone1 = Drone (10, 10, 50, 50, 5)
-
-(* type Airspace (drons:drone) =
-    let mutable drones = 
+type Airspace (drones: Drone) =
+    let mutable drones = Drone list 
     member this.DroneDist =
     member this.FlyDrones =
     member this.AddDrone =
-    member this.WillCollide = *)
+    member this.WillCollide = 
