@@ -1,4 +1,4 @@
-module Simulate
+module SimulateDrones
 
 ///<summary> The function this.Fly sets the drone's new position after one second flight.</summary>
 ///<param name="f">A .</param>
