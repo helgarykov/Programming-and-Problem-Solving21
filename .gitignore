@@ -1,10 +1,14 @@
+.vscode/
+.vs/
+obj/
+bin/
+
 *.exe
 *.dll
 *.zip
 *.gz
 
 .ionide
-.vscode
 .DS_Store
 
 *.aux
