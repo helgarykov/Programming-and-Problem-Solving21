@@ -12,29 +12,41 @@ module SimulateDrones
 ///<summary> The function this.AtDestination returns TRUE if the destination is reached and FALSE otherwise.</summary>
 
 ///<summary> The function divideVector takes a set of coordinates x and y and a float and returns a new set of coordinates x and y.</summary>
-let divideVector (x: float, y: float) (e: float) : float * float =
-    let xA = x / e
-    let yA = y / e
-    (xA, yA)
+let divide (x: float, y: float) (e: float) : float * float =
+        let xA = x / e
+        let yA = y / e
+        (xA, yA)
        
- ///<summary> The function multiplyVector takes a set of coordinates x and y and a float s and returns a new set of coordinates x and y.</summary>       
-let multiplyVector (s: float) (x: float, y: float) : float * float =
-    let xB = s * x
-    let yB = s * y
-    (xB, yB)
-
-
+ ///<summary> The function multiply takes a set of coordinates x and y and a float s and returns a new set of coordinates x and y.</summary>       
+let multiply (s: float) (x: float, y: float) : float * float =
+        let xB = s * x
+        let yB = s * y
+        (xB, yB)
 
 type Drone (x:int, y:int, x1:int, y1:int, s:int) =
+    let mutable X = x
+    let mutable Y = y
+    let mutable X1 = x1
+    let mutable Y1 = y1
     let mutable position = (x, y)
     let mutable aDestination = (x1, y1)
     let mutable speed = float (s) 
 
+    (*member this.divide (x: float, y: float) (e: float) : float * float =
+        let xA = x / e
+        let yA = y / e
+        (xA, yA)
+    
+    member this.multiply (s: float) (x: float, y: float) : float * float =
+        let xB = s * x
+        let yB = s * y
+        (xB, yB)*)
+    
     member this.fly = 
         let directionVector = ((float (x1 - x)), (float (y1 - y)))                     
         let lengthVector = float (sqrt ((float (x1 - x) ** 2.0) + (float (y1 - y) ** 2.0)))  
-        let unitVector = divideVector directionVector lengthVector 
-        let newPosition = multiplyVector speed unitVector 
+        let unitVector = divide directionVector lengthVector 
+        let newPosition = multiply speed unitVector 
         newPosition                                
         
     
@@ -44,6 +56,7 @@ type Drone (x:int, y:int, x1:int, y1:int, s:int) =
         else
             aDestination
 
+    
     member this.atDestination =    
         if position = this.destination then 
             true 
@@ -59,17 +72,17 @@ let e = Drone (90, 300, 150, 10, 2) *)
 
 
 
-type Airspace (drones: Drone) =
-    let mutable drones = Drone list 
+(* type Airspace (drones: Drone) =
+    let mutable drones = []
     
     member this.DroneDist = 
-        let drone1 = 1.destination
-        let drone2 = 2.destination
+        let drone1 = frs.destination
+        let drone2 = sec.destination
 
-        let distance = float (sqrt ((1.destination ** 2) + (2.destination ** 2)))
+        
 
 
 
-    member this.FlyDrones =
+    member this.FlyDrones = 
     member this.AddDrone =
-    member this.WillCollide = 
+    member this.WillCollide = *)
