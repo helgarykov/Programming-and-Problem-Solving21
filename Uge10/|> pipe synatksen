@@ -1,0 +1,9 @@
+drones 
+|> pairs <arg>
+|> List.filter (fun (x, y) -> this.DroneDist x y < 5.0) <arg>
+
+
+=
+
+
+List.filter (fun (x, y) -> this.DroneDist x y < 5.0) (pairs drones)

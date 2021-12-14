@@ -1,0 +1,15 @@
+        // <summary>Current position of the drone in the airspace</summary>
+        member this.Position = position
+
+        // <summary>The destination point of the drone</summary>
+        member this.Destination = destination
+        member this.Speed = speed
+         
+        // <summary>Move the drone toward the destination by one second.</summary>
+        member this.Fly() =
+            let toTarget = destination - position
+
+
+            // <summary>Get a list of drones that will eventually collide within mins minutes.</summary>
+            // <returns>A list of pairs of drones.</returns>
+            member this.WillCollide (mins: int) =
