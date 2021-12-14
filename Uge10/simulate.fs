@@ -23,6 +23,12 @@ let multiply (s: float) (x: float, y: float) : float * float =
         let yB = s * y
         (xB, yB)
 
+type Vector (x: float, y: float) = 
+    let x = x
+    let this.y = y
+
+    let this.X 
+
 type Drone (x:int, y:int, x1:int, y1:int, s:int) =
     let mutable X = x
     let mutable Y = y
