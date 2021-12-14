@@ -71,13 +71,24 @@ module Simulation =
         let e: ('a * 'a) list = []
         r l e
 
+    
+    let addifmissing (l: 'a list) (i: 'a) =
+        match List.contains i l with
+        | false -> i :: l
+        | true -> l
+
+    let rec addallmissing (l: 'a list)  (n: 'a list) =
+        match n with
+        | [] -> l
+        | head :: tail -> addallmissing (addifmissing l head) tail
+
     type Airspace(d: Drone list) = 
         let mutable drones: Drone list = d
 
         member this.DroneDist (a: Drone) (b: Drone) =
             (a.Position - b.Position).Length
 
-        member this.AllWithinRange() = 
+        member this.PairsInCollisionRange() = 
             drones |> pairs |> List.filter (fun (x, y) -> this.DroneDist x y < 5.0)
 
         member this.AddDrone(d) =
@@ -86,5 +97,17 @@ module Simulation =
         member this.FlyDrones() =
             drones |> List.iter (fun x -> x.Fly())
 
-        member this.WillCollide() =
-            let x = 5
+        member this.WillCollide (mins: int) =
+            let increments = mins * 60
+
+            let rec tick (i: int) (acc: (Drone * Drone) list) =
+                let colliding = this.PairsInCollisionRange()
+                this.FlyDrones()
+                
+                match i with
+                | x when x > 0 -> tick (i-1) (addallmissing acc colliding)
+                | _ -> acc
+
+            tick increments []
+
+            

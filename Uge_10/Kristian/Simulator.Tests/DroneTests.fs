@@ -58,3 +58,17 @@ module DroneTests =
         let p = pairs l
 
         Assert.Equal(10, p.Length)
+
+    [<Fact>]
+    let ``We can add an item to a list, only if missing`` () = 
+        let l = [1; 4; 7; 9]
+
+        Assert.Equal(4, (addifmissing l 7).Length)
+        Assert.Equal(5, (addifmissing l 5).Length)
+
+    [<Fact>]
+    let ``We can add all missing items from a list to another`` () = 
+        let a = [1; 4; 7; 9]
+        let b = [1; 7; 10; 18]
+
+        Assert.Equal(6, (addallmissing a b).Length)
