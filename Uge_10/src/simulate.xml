@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doc>
+<assembly><name>simulate</name></assembly>
+<members>
+<member name="F:HRI.Drones.Simulation.Airspace.drones">
+<summary>A list of drones.</summary>
+</member>
+<member name="M:HRI.Drones.Simulation.Airspace.WillCollide(System.Int32)">
+<summary>Get a list of drones that will eventually collide within mins minutes.</summary>
+<param name="mins"> Minutes as an int.</param>
+<returns>A list of pairs of drones.</returns>
+</member>
+<member name="M:HRI.Drones.Simulation.Airspace.PairsInCollisionRange">
+<summary>Given a list of drones, returns a list of the pairs of drones that are in collision because the distance between which is less than 5 meters.</summary>
+</member>
+<member name="M:HRI.Drones.Simulation.Airspace.FlyDrones">
+<summary>Given a list of drones, make them perform a one second flight.</summary>
+</member>
+<member name="M:HRI.Drones.Simulation.Airspace.DroneDist(HRI.Drones.Simulation.Drone,HRI.Drones.Simulation.Drone)">
+<summary>Get the distance between two drones.</summary>
+<param name="a">The first of the two drones .</param> 
+<param name="a">The second of the two drones .</param>
+<returns> The distance between the drones as float.</returns> 
+</member>
+<member name="M:HRI.Drones.Simulation.Airspace.AddDrone(HRI.Drones.Simulation.Drone)">
+<summary> Given a list of drones d, adds a new drone to the list.</summary>
+</member>
+<member name="F:HRI.Drones.Simulation.Drone.speed@77">
+<summary>The constant speed of a drone.</summary>
+</member>
+<member name="F:HRI.Drones.Simulation.Drone.destination@74">
+<summary> The position of a drone as a vector after one flight.</summary>
+</member>
+<member name="F:HRI.Drones.Simulation.Drone.position@71">
+<summary> The position of a drone as a vector before one flight.</summary>
+</member>
+<member name="P:HRI.Drones.Simulation.Drone.Speed">
+<summary>The speed of a particular drone.</summary>
+</member>
+<member name="P:HRI.Drones.Simulation.Drone.Position">
+<summary>Current position of the drone in the airspace</summary>       
+</member>
+<member name="P:HRI.Drones.Simulation.Drone.Destination">
+<summary>The destination point of the drone</summary>
+</member>
+<member name="M:HRI.Drones.Simulation.Drone.Fly">
+<summary>Move the drone toward the destination by one second.</summary>
+<returns>Position of the drone after one second flight.</returns> 
+</member>
+<member name="M:HRI.Drones.Simulation.Drone.AtDestination">
+<summary>Given the drone's current position and destination, return TRUE if the destination is reached and FALSE otherwise.</summary>
+</member>
+<member name="M:HRI.Drones.Simulation.addallmissing``1(Microsoft.FSharp.Collections.FSharpList{``0},Microsoft.FSharp.Collections.FSharpList{``0})">
+<summary>Given two lists of elements 'a, return a list of 'a with no repetitions os 'a.</summary> 
+<param name="l"> A list of 'a which starts to be empty and to which the elements from the list n are being added one by one, if they're not alredy present in l.</param> 
+<param name="n"> A list of elements 'a which is to be sorted for dublicates.</param>
+<returns> The list l, which is a sorted for dublicates list n.</returns> 
+</member>
+<member name="M:HRI.Drones.Simulation.addifmissing``1(Microsoft.FSharp.Collections.FSharpList{``0},``0)">
+<summary>Given a list of elements 'a and an element of the type 'a, add this element at the head of the list when not on the list, otherwise do nothing.</summary> 
+<param name="l"> A list of 'a.</param> 
+<param name="i"> A single element of 'a.</param>
+<returns> If i is not already on the list l, returns a new list with the added i, if i is on the list, returns the input list.</returns>  
+</member>
+<member name="M:HRI.Drones.Simulation.pairs``1(Microsoft.FSharp.Collections.FSharpList{``0})">
+<summary>Given a list of elements 'a, combine them into pairs and return a list of all permutation pairs ('a * 'a).</summary>
+<param name="l"> A list of 'a.</param>
+<returns> A list of tuples (a'*'a).</returns> 
+</member>
+<member name="T:HRI.Drones.Simulation">
+<summary>
+ A 2 dimentional drone library.
+ Drones are defined as objects represented by two vectors (position and destination) and speed.
+</summary>
+</member>
+<member name="M:HRI.Drones.Primitive.Vector.op_Subtraction(HRI.Drones.Primitive.Vector,HRI.Drones.Primitive.Vector)">
+<summary>Get the difference between two vectors.</summary>
+<param name="l">A vector to the left of the binary operator(-).</param>
+<param name="r">A vector to the right of the binary operator(-).</param>
+<returns>A new vector as a float.</returns>
+</member>
+<member name="M:HRI.Drones.Primitive.Vector.op_Multiply(HRI.Drones.Primitive.Vector,System.Double)">
+<summary>Get the product of a vector and a float number.</summary>
+<param name="l">A vector to the left of the binary operator(*).</param>
+<param name="r">A constant to the right of the binary operator(*).</param>
+<returns>A new vector as a float.</returns>
+</member>
+<member name="M:HRI.Drones.Primitive.Vector.op_Division(HRI.Drones.Primitive.Vector,System.Double)">
+<summary>Get the quotient of a vector and a float number.</summary>
+<param name="l">A vector to the left of the binary operator(/).</param>
+<param name="r">A constant to the right of the binary operator(/).</param>
+<returns>A new vector as a float.</returns>
+</member>
+<member name="M:HRI.Drones.Primitive.Vector.op_Addition(HRI.Drones.Primitive.Vector,HRI.Drones.Primitive.Vector)">
+<summary>Get the sum of two vectors.</summary>
+<param name="l">A vector to the left of the binary operator(+).</param>
+<param name="r">A vector to the right of the binary operator(+).</param>
+<returns>A new vector as a float.</returns>
+</member>
+<member name="P:HRI.Drones.Primitive.Vector.Length">
+<summary> Defines current length of a vector as a float.</summary>
+</member>
+<member name="M:HRI.Drones.Primitive.Vector.Normalized">
+<summary> Given a vector and its length, returns a unit vector.</summary>
+</member>
+<member name="M:HRI.Drones.Primitive.Vector.Equals(System.Object)">
+<summary> Given two vectors a and b, checks whether they are equal.</summary>
+<param name="b"> A vector to the right of the function Equals, which is matched with a vector to the left.</param>
+<returns> TRUE if a = b, otherwise FALSE.</retyrns>
+</member>
+<member name="T:HRI.Drones.Primitive">
+<summary>
+A two-dimentional vector-as-a-primitive-type library.
+Includes its properties and additional methods of operator overloading.
+</summary>
+</member>
+</members>
+</doc>
