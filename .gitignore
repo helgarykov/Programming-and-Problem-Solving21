@@ -19,3 +19,6 @@ bin/
 \#build*
 .\#build*
 .fake
+
+*.DotSettings.user
+.idea/

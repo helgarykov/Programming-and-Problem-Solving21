@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "HRI.RicochetRobots.Game", "HRI.RicochetRobots.Game\HRI.RicochetRobots.Game.fsproj", "{AC5A049F-2479-4C17-97A0-34E7368A5759}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "HRI.RicochetRobots.Game.Test", "HRI.RicochetRobots.Game.Test\HRI.RicochetRobots.Game.Test.fsproj", "{9FE32874-5040-47B8-B6D3-9157460F49C3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC5A049F-2479-4C17-97A0-34E7368A5759}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC5A049F-2479-4C17-97A0-34E7368A5759}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC5A049F-2479-4C17-97A0-34E7368A5759}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC5A049F-2479-4C17-97A0-34E7368A5759}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FE32874-5040-47B8-B6D3-9157460F49C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FE32874-5040-47B8-B6D3-9157460F49C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FE32874-5040-47B8-B6D3-9157460F49C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FE32874-5040-47B8-B6D3-9157460F49C3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
