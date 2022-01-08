@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <Compile Include="BoardDisplay.fs" />
+    <Compile Include="BoardElements.fs" />
+    <Compile Include="Board.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
