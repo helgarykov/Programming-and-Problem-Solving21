@@ -8,8 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="MovementTests.fs" />
     <Compile Include="BoardDisplay.fs" />
-    <Compile Include="Tests.fs" />
+    <Compile Include="BoardElementTests.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 

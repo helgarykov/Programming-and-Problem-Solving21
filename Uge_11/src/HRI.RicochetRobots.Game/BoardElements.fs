@@ -3,36 +3,7 @@ namespace HRI.RicochetRobots.Game
 module BoardElements =
 
     open BoardDisplay
-    
-    type Direction = North | East | South | West
-    type Position = Position of int * int
-    with
-        member this.Value =
-            let (Position (r, c)) = this 
-            (r, c)
-            
-        member this.Row =
-            let (r, _) = this.Value
-            r
-            
-        member this.Column =
-            let (_, c) = this.Value
-            c
-            
-        member this.WithMove direction =
-            match direction with
-            | North -> Position (this.Row - 1, this.Column)
-            | East -> Position (this.Row, this.Column + 1)
-            | South -> Position (this.Row + 1, this.Column)
-            | West -> Position (this.Row, this.Column - 1)
-            
-        member this.WithMoveSteps direction steps =
-            let rec r (n: int) (acc: Position) =
-                match n with
-                | 0 -> acc
-                | i -> r (n - 1) (this.WithMove direction)
-                
-            r steps this
+    open Movement
     
     type Action =
         | Stop of Position
@@ -53,7 +24,12 @@ module BoardElements =
         member val Position = Position (row, col) with get, set
 
         override this.Interact other dir =
-            Ignore
+            match other with
+            | :? Robot as r -> 
+                match r.Position.WithMove dir with
+                | x when x = this.Position -> Stop r.Position
+                | _ -> Ignore
+            | _ -> Ignore
 
         override this.RenderOn display =
             display.Set this.Position.Value (Some this.Name)
@@ -76,19 +52,18 @@ module BoardElements =
         inherit BoardElement()
         member val Rows = rows with get, set
         member val Columns = columns with get, set
-        override this.RenderOn _ = ()
-        
-    let along (initial: Position) dir length f =
-        let offsets = List.init (abs length) id
-        
-        for offset in offsets do
-            let p = initial.WithMoveSteps dir offset
-            f p.Value
+        override this.Interact element direction =
+            let outside (p: Position) =
+                p.Row < 0 || p.Column < 0 || p.Row >= this.Rows || p.Column >= this.Columns
 
-    let dfunc (display: BoardDisplay) direction =
-        match direction with
-        | North | South -> display.SetRightWall
-        | West | East -> display.SetBottomWall
+            match element with
+            | :? Robot as r ->
+                match (outside (r.Position.WithMove direction)) with
+                | true -> Stop r.Position
+                | false -> Ignore
+            | _ -> Ignore
+
+        override this.RenderOn _ = ()
 
     [<AbstractClass>]
     type Wall(row: int, col: int, length: int) =
@@ -96,17 +71,61 @@ module BoardElements =
         member val Position = Position(row, col) with get, set
         member val Length = length with get, set
         abstract member Direction: unit -> Direction
+        abstract member Blocks: unit -> Direction
+
+        member this.AllPositions () =
+            let direction = this.Direction()
+            
+            List.init (abs length) id 
+            |> List.map (fun o -> this.Position.WithMoveSteps direction o)
 
         override this.RenderOn display =
-            let dir = this.Direction()
-            along this.Position dir this.Length (dfunc display dir)
+            let f = match (this.Direction()) with
+                    | North | South -> display.SetRightWall
+                    | West | East -> display.SetBottomWall
+
+            for cell in (this.AllPositions()) do
+                f cell.Value
+
+        override this.Interact element direction =
+            let block = this.Blocks()
+
+            let isWallOccupyingSameSpace (w: Wall) (r: Robot) =
+                w.AllPositions()
+                |> List.exists (fun p -> r.Position = p)
+
+            let isWallAdjacent (w: Wall) (r: Robot) = 
+                w.AllPositions()
+                |> List.map (fun p -> p.WithMove block)
+                |> List.exists (fun p -> r.Position = p)
+
+            match element with
+            | :? Robot as r -> 
+                let movingOppositeBlocking = direction = opposite block
+                let isAdjacent = isWallAdjacent this r
+                let isOutsideMovingIn = movingOppositeBlocking && isAdjacent
+
+                let movingAlongBlocking = direction = block
+                let isOccupyingSameSpace = isWallOccupyingSameSpace this r
+                let isInsideMovingOut = movingAlongBlocking && isOccupyingSameSpace
+
+                let isCollision = isOutsideMovingIn || isInsideMovingOut
+
+                match isCollision with
+                | true -> Stop r.Position
+                | false -> Ignore
+
+            | _ -> Ignore
+
 
     type VerticalWall(row: int, col: int, length: int) =
         inherit Wall(row, col, length)
 
         override this.Direction() = match this.Length with
-                                    | x when x > 0 -> North
-                                    | _ -> South
+                                    | x when x > 0 -> South
+                                    | _ -> North
+
+        override this.Blocks() = East
     
     type HorizontalWall(row: int, col: int, length: int) =
         inherit Wall(row, col, length)
@@ -116,3 +135,5 @@ module BoardElements =
         override this.Direction() = match this.Length with
                                     | x when x > 0 -> East
                                     | _ -> West
+
+        override this.Blocks() = South

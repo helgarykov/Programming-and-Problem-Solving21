@@ -7,8 +7,10 @@
 
   <ItemGroup>
     <Compile Include="BoardDisplay.fs" />
+    <Compile Include="Movement.fs" />
     <Compile Include="BoardElements.fs" />
     <Compile Include="Board.fs" />
+    <Compile Include="Game.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
