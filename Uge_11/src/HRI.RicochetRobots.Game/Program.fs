@@ -1,8 +1,4 @@
-﻿
-// For more information see https://aka.ms/fsharp-console-apps
-printfn "Hello from F#"
-
-open HRI.RicochetRobots.Game.Board
+﻿open HRI.RicochetRobots.Game.Board
 open HRI.RicochetRobots.Game.BoardElements
 open HRI.RicochetRobots.Game.Game
 open HRI.RicochetRobots.Game.Extensions
