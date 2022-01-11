@@ -9,6 +9,7 @@ module BoardElements =
         | Stop of Position
         | Continue of Direction * Position
         | Ignore
+        | Explode
 
     [<AbstractClass>]
     type BoardElement() =

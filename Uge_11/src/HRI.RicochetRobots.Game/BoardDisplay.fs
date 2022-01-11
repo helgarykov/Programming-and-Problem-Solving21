@@ -3,6 +3,7 @@ namespace HRI.RicochetRobots.Game
 open System
 
 module Printers =
+
     let repeat (s: string) (n: int) = String.replicate n s
     let printr (s: string) (i: int option) = printf "%s" (repeat s (defaultArg i 1))
     let prcorner () = printf "+"

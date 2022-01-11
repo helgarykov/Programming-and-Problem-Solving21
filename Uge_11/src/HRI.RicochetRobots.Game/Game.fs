@@ -34,7 +34,9 @@ module Game =
 
     type Game(board: Board) =
         
+        let mutable numsteps = 0
         member val Board = board with get
+
 
         member this.IsGameOver() =
             let rec ingoal (elements: BoardElement list) =
@@ -73,6 +75,7 @@ module Game =
             | Some robot -> 
                 let direction = directionInput()
                 this.Board.Move robot direction
+                numsteps <- numsteps + 1
 
                 match this.IsGameOver() with
                 | true -> Win
@@ -96,7 +99,7 @@ module Game =
 
             let message = 
                 match result with
-                | Win -> "YOU WIN!"
+                | Win -> sprintf "YOU WON in %i steps!" numsteps
                 | Defeat -> "Game over. You lost."
                 | _ -> "An error occured."
 
