@@ -10,6 +10,7 @@ module BoardElements =
         | Continue of Direction * Position
         | Ignore
         | Explode
+        | AddGoal of Position
 
     [<AbstractClass>]
     type BoardElement() =

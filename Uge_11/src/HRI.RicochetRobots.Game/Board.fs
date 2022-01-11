@@ -34,7 +34,10 @@ module Board =
                     | Explode ->
                         this.RemoveElement head
                         this.RemoveElement r
-                        Explode
+                        action
+                    | AddGoal p ->
+                        this.AddElement (Goal (p.Row, p.Column))
+                        action
                     | _ -> action
 
             let rec movewhileignored (e: BoardElement list) =
