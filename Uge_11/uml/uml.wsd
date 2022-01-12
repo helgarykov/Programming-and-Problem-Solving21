@@ -1,0 +1,66 @@
+@startuml Test
+
+class Game {
+    IsGameOver(): bool
+    ShowBoard(): unit
+    PlayerAction(): Action
+    GameLoop(): Action
+    Play(): unit
+}
+
+class Board {
+    Elements: BoardElement list
+    AddElement(BoardElement): unit
+    Move(Robot, Direction): unit
+}
+
+abstract class BoardElement {
+    Interact(): Action
+    RenderOn(BoardDisplay): unit
+    GameOver(BoardElement list): bool
+}
+
+class Robot {
+    Position: Position
+}
+
+abstract class Wall {
+    Position: Position
+    Length: int
+    Direction(): Direction
+    Blocks(): Direction
+    AllPositions(): Position list
+}
+
+class VerticalWall
+class HorizontalWall
+
+class Goal {
+    Position: Position
+}
+
+class BoardFrame {
+    Rows: int
+    Columns: int
+}
+
+class Position {
+    Value: int * int
+    Row: int
+    Column: int
+    WithMove(Direction): Position
+    WithMoveSteps(Direction, int): Position
+}
+
+Game *-- Board
+Board o-- BoardElement
+BoardElement <|.. Robot
+BoardElement <|.. Goal
+BoardElement <|.. BoardFrame
+BoardElement <|.. Wall
+Wall <|.. VerticalWall
+Wall <|.. HorizontalWall
+
+Position ()- Robot
+Position ()- Wall
+Position ()- Goal

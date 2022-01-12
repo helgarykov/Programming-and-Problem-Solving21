@@ -64,7 +64,7 @@ module Game =
         member this.PlayerAction() =
             System.Console.WriteLine("Please select a robot: ")
 
-            let i = System.Console.ReadLine()
+            let i = System.Console.ReadLine()           
             let s = (if i.Length = 1 then (String.replicate 2 i) else i).Substring(0, 2).ToLowerInvariant()
             let r = 
                 robotsOf this.Board.Elements

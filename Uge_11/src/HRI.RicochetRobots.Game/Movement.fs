@@ -42,5 +42,5 @@ module Movement =
 
     type Position with
             
-        member this.WithMove direction = move this direction
-        member this.WithMoveSteps direction steps = moveSteps this direction steps
+        member this.WithMove (direction: Direction) = move this direction
+        member this.WithMoveSteps (direction: Direction) (steps: int) = moveSteps this direction steps

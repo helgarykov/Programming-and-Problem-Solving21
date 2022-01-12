@@ -41,7 +41,6 @@ module Board =
                     | _ -> action
 
             let rec movewhileignored (e: BoardElement list) =
-                let p = robot.Position.WithMove direction
                 let a = interact robot direction e
 
                 match a with
