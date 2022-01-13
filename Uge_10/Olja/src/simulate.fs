@@ -134,7 +134,7 @@ module Simulation =
         | true -> l
 
 
-///<summary>Given two lists of elements 'a, return a list of 'a with no repetitions os 'a.</summary> 
+///<summary>Given two lists of elements 'a, return a list of 'a with no repetitions of 'a.</summary> 
 ///<param name="l"> A list of 'a which starts to be empty and to which the elements from the list n are being added one by one, if they're not alredy present in l.</param> 
 ///<param name="n"> A list of elements 'a which is to be sorted for dublicates.</param>
 ///<returns> The list l, which is a sorted for dublicates list n.</returns> 
