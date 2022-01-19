@@ -1,15 +1,16 @@
-namespace HRI.RicochetRobots.Game
+module Robots
 
-open System
+///A library of print-functions.
+///Includes helper-methods for printing strings necessary for creating a boad display in the next module.
 
-module Printers =
+
 
     let repeat (s: string) (n: int) = String.replicate n s
     let printr (s: string) (i: int option) = printf "%s" (repeat s (defaultArg i 1))
     let prcorner () = printf "+"
     let prhline (i: int option) = printr "-" i
     let prvline (i: int option) = printr "|" i
-    let prnewline () = printf "%s" Environment.NewLine
+    let prnewline () = printf "%s" System.Environment.NewLine
     let prrowsep (cols: int) (cellwidth: int) =
         prcorner ()
         for i = 1 to cols do
@@ -18,9 +19,9 @@ module Printers =
         prnewline()
 
 
-module BoardDisplay =
+///A 2 dimentional board display library.
+///Board display creats a board that is a grid consisting of cells or feilds. 
 
-    open Printers
     
     let strfix (chars: int) (s: string option) =
         match s with
@@ -41,6 +42,8 @@ module BoardDisplay =
         RightWall: bool
         BottomWall: bool
     }
+
+    
     
     let createBoardCell (rows: int) (cols: int) (index: int) (rwall: bool) (bwall: bool) (content: string option) =
         {
@@ -56,6 +59,8 @@ module BoardDisplay =
         let c2i = coordsToIndex cols
         let mutable fields: BoardCell list = List.init (rows * cols) (fun i -> createBoardCell rows cols i false false None)
         
+
+
         member this.SetCell (cell: BoardCell) =
             let i = cell.Index
             fields <- (fields.GetSlice (None, Some (i - 1))) @ [cell] @ (fields.GetSlice (Some (i + 1), None))
@@ -105,24 +110,35 @@ module BoardDisplay =
                 this.ShowRow r
 
 
-module Movement =
+///A 2 dimentional movement library.
+///Movement defines the four possible directions for moving a robot on a board as well as the manner of the movement. 
+
     
     type Direction = North | East | South | West
 
+
     type Position = Position of int * int
     with
+
+///<summary>Given a type Position, deconstruct it into a position as a tuple.</summary> 
         member this.Value =
             let (Position (r, c)) = this 
             (r, c)
-        
+
+ ///<summary>Given a type Position, deconstruct it into a row.</summary>        
         member this.Row =
             let (r, _) = this.Value
             r
-        
+
+///<summary>Given a type Position, deconstruct it into a column.</summary>             
         member this.Column =
             let (_, c) = this.Value
             c
-    
+
+
+///<summary>Given a type Direction, return the opposite direction in order to check for the robots hits a wall.</summary>   
+///<param name="direction">The current direction of movement.</param>
+///<returns>The opposite direction.</returns>
     let opposite (direction: Direction) =
         match direction with
         | North -> South
@@ -130,31 +146,47 @@ module Movement =
         | South -> North
         | West -> East
 
-    let move (position: Position) direction =
+
+///<summary>Given position and direction, return a new position by moving one step only.</summary> 
+///<param name="position">The start position (not connected to robots, cells etc.).</param>
+///<param name="direction">The direction (not connected to robots, cells etc.).</param>
+///<returns>A new (neighbour) position in direction (North, South, East, West) (not connected to robots, cells etc.).</returns>
+    let move (position: Position) (direction: Direction) : Position =
         match direction with
         | North -> Position (position.Row - 1, position.Column)
         | East -> Position (position.Row, position.Column + 1)
         | South -> Position (position.Row + 1, position.Column)
         | West -> Position (position.Row, position.Column - 1)
 
-    let moveSteps (position: Position) direction steps = 
+
+///<summary>Given position and direction and # of steps, return a new position depending on the # of steps.</summary> 
+///<param name="position">The start position (not connected to robots, cells etc.).</param>
+///<param name="direction">The direction (not connected to robots, cells etc.).</param>
+///<param name="steps">Number of steps as an int (not connected to robots, cells etc.).</param>
+///<returns>A new (NOT neighbour) position in direction (North, South, East, West (not connected to a robot) after moving # steps.</returns>
+    let moveSteps (position: Position) (direction: Direction) (steps: int) : Position = 
         let rec r (n: int) (acc: Position) =
-            match n with
+            match n with 
             | 0 -> acc
             | i -> r (n - 1) (move acc direction)
         
         r steps position
 
+
     type Position with
-            
+
+
+///<summary> Given a direction, return a new position of a robot by moving one step only.</summary>     
+///<param name="direction">The direction of moving of the robot.</param>
+///<returns>A new neighbour position in direction (North, South, East, West of a robot.</returns>        
         member this.WithMove (direction: Direction) = move this direction
+
+///<summary>Given a direction, return a new position of a robot depending on the # of steps.</summary> 
+///<param name="direction">The direction (not connected to robots, cells etc.).</param>
+///<param name="steps">Number of steps of a robot.</param>
+///<returns>A new (NOT neighbour) position in direction (North, South, East, West of a robot after moving # steps.</returns>
         member this.WithMoveSteps (direction: Direction) (steps: int) = moveSteps this direction steps
 
-
-module BoardElements =
-
-    open BoardDisplay
-    open Movement
     
     type Action =
         | Stop of Position
@@ -171,11 +203,14 @@ module BoardElements =
         abstract member GameOver : BoardElement list -> bool
         default _.GameOver _ = false
     
-    type Robot(row: int, col: int, name: string) =
-        inherit BoardElement()
+    
+    and Robot(row: int, col: int, name: string) =
+        inherit BoardElement()    
         member val Name = name with get, set
         member val Position = Position (row, col) with get, set
 
+        
+        
         override this.Interact other dir =
             match other with
             | :? Robot as r -> 
@@ -190,18 +225,18 @@ module BoardElements =
         member this.Step (direction: Direction) =
             this.Position <- this.Position.WithMove direction
             
-    let robotsOf (boardElements: BoardElement list): Robot list =
-        boardElements
-        |> List.filter (fun x -> x :? Robot)
-        |> List.map (fun x -> downcast x)
 
-    type Goal(row: int, col: int) =
+    and Goal(row: int, col: int) =
         inherit BoardElement()
+        let robotsOf (boardElements: BoardElement list): Robot list =
+            boardElements
+            |> List.filter (fun x -> x :? Robot)
+            |> List.map (fun x -> downcast x)
         member val Position = Position (row, col) with get, set
         override this.GameOver elements = List.exists (fun (r: Robot) -> r.Position = this.Position) (robotsOf elements)
         override this.RenderOn display = display.Set this.Position.Value (Some "GG")
 
-    type BoardFrame(rows: int, columns: int) =
+    and BoardFrame(rows: int, columns: int) =
         inherit BoardElement()
         member val Rows = rows with get, set
         member val Columns = columns with get, set
@@ -217,6 +252,49 @@ module BoardElements =
             | _ -> Ignore
 
         override this.RenderOn _ = ()
+    
+    and Trap(r: int, c: int) =
+        inherit BoardElement()
+
+        member val Position = Position (r, c)
+
+        override this.RenderOn display =
+            display.Set (this.Position.Row, this.Position.Column) (Some "XX")
+
+        override this.Interact element direction =
+            match element with
+            | :? Robot as r ->
+                let collision = (r.Position.WithMove direction) = this.Position
+                match collision with
+                | true -> Action.Explode
+                | false -> Action.Ignore
+            | _ -> Action.Ignore
+
+    
+    and Helper(frame: BoardFrame) =
+        inherit BoardElement()
+
+        let mutable steps = 0
+
+        let random = System.Random()
+        let rpos() =
+            Position (random.Next(0, frame.Rows), random.Next(0, frame.Columns))
+
+        override this.RenderOn display = ()
+
+        override this.Interact element direction =
+            steps <- steps + 1
+
+            if (steps % 100 = 0) then
+                Action.AddGoal (rpos())
+            else
+                Action.Ignore
+
+
+    let robotsOf (boardElements: BoardElement list): Robot list =
+        boardElements
+        |> List.filter (fun x -> x :? Robot)
+        |> List.map (fun x -> downcast x)
 
     [<AbstractClass>]
     type Wall(row: int, col: int, length: int) =
@@ -271,7 +349,7 @@ module BoardElements =
             | _ -> Ignore
 
 
-    type VerticalWall(row: int, col: int, length: int) =
+    and VerticalWall(row: int, col: int, length: int) =
         inherit Wall(row, col, length)
 
         override this.Direction() = match this.Length with
@@ -280,7 +358,7 @@ module BoardElements =
 
         override this.Blocks() = East
     
-    type HorizontalWall(row: int, col: int, length: int) =
+    and HorizontalWall(row: int, col: int, length: int) =
         inherit Wall(row, col, length)
         member val Position = Position (row, col) with get, set
         member val Length = length with get, set
@@ -292,10 +370,6 @@ module BoardElements =
         override this.Blocks() = South
 
 
-module Board =
-    
-    open Movement
-    open BoardElements
     
     type Board(rows: int, columns: int) =
         member val Elements: BoardElement list = [] with get, set
@@ -342,20 +416,12 @@ module Board =
                 | _ -> a
 
             let others = 
-                this.Elements
-                |> List.filter (fun x -> not (x = robot))
+                this.Elements |> List.filter (fun x -> not (obj.ReferenceEquals(robot,x)))
 
             movewhileignored others |> ignore
 
             ()
 
-
-module Game =
-    
-    open Board
-    open BoardDisplay
-    open BoardElements
-    open Movement
 
     type GameCondition = Undecided | Win | Defeat
 
@@ -381,6 +447,7 @@ module Game =
             match head with
             | :? BoardFrame as frame -> frame
             | _ -> fetchFrame tail
+
 
     type Game(board: Board) =
         
@@ -414,24 +481,33 @@ module Game =
         member this.PlayerAction() =
             System.Console.WriteLine("Please select a robot: ")
 
-            let i = System.Console.ReadLine()           
-            let s = (if i.Length = 1 then (String.replicate 2 i) else i).Substring(0, 2).ToLowerInvariant()
-            let r = 
-                robotsOf this.Board.Elements
-                |> List.filter (fun x -> x.Name = s)
-                |> List.tryExactlyOne
+            let i = System.Console.ReadLine()
+            try           
+                let s = (if i.Length = 1 then (String.replicate 2 i) else i).Substring(0, 2).ToLowerInvariant()
+                
+                let r = 
+                    robotsOf this.Board.Elements
+                    |> List.filter (fun x -> x.Name = s)
+                    |> List.tryExactlyOne
 
-            match r with
-            | Some robot -> 
-                let direction = directionInput()
-                this.Board.Move robot direction
-                numsteps <- numsteps + 1
+                match r with
+                | Some robot -> 
+                    let direction = directionInput()
+                    this.Board.Move robot direction
+                    numsteps <- numsteps + 1
 
-                match this.IsGameOver() with
-                | true -> Win
-                | false -> Undecided
+                    match this.IsGameOver() with
+                    | true -> Win
+                    | false -> Undecided
 
-            | None -> Undecided
+                | None -> Undecided
+
+            with 
+            | :? System.ArgumentOutOfRangeException -> 
+                printfn("lol")
+                Undecided
+            
+                
 
         member this.GameLoop() =
             let mutable condition = Undecided
@@ -458,43 +534,7 @@ module Game =
             0
 
 
-module Extensions =
-
-    type Trap(r: int, c: int) =
-        inherit BoardElements.BoardElement()
-
-        member val Position = Movement.Position (r, c)
-
-        override this.RenderOn display =
-            display.Set (this.Position.Row, this.Position.Column) (Some "XX")
-
-        override this.Interact element direction =
-            match element with
-            | :? BoardElements.Robot as r ->
-                let collision = (r.Position.WithMove direction) = this.Position
-                match collision with
-                | true -> BoardElements.Action.Explode
-                | false -> BoardElements.Action.Ignore
-            | _ -> BoardElements.Action.Ignore
-
-    type Helper(frame: BoardElements.BoardFrame) =
-        inherit BoardElements.BoardElement()
-
-        let mutable steps = 0
-
-        let random = System.Random()
-        let rpos() =
-            Movement.Position (random.Next(0, frame.Rows), random.Next(0, frame.Columns))
-
-        override this.RenderOn display = ()
-
-        override this.Interact element direction =
-            steps <- steps + 1
-
-            if (steps % 100 = 0) then
-                BoardElements.Action.AddGoal (rpos())
-            else
-                BoardElements.Action.Ignore
+    
 
     
 

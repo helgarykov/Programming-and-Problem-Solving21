@@ -1,8 +1,7 @@
-open HRI.RicochetRobots.Game.Board
-open HRI.RicochetRobots.Game.BoardElements
-open HRI.RicochetRobots.Game.Game
-open HRI.RicochetRobots.Game.Extensions
+open Robots
 
+
+///Creating a board 4 x 7 for a game.
 let board = Board (4, 7)
 let frame = BoardFrame (4, 7)
 
