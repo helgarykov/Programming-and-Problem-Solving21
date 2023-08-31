@@ -1,3 +1,3 @@
 ## POP21 assignments
 
-This is a code repository for all my assignments in the POP21 course, semester 1.
+This is a repo for all F#-assignments in *Programmering og problemløsning* (PoP) POP21 course, semester 1.
